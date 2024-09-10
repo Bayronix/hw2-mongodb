@@ -43,10 +43,28 @@ export const getCreateContactController = async (req, res, next) => {
   });
 };
 
-export const getDeleteContactController = async (req, res, next) => {
-  const { id } = req.params;
+export const patchContactController = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await contactServices.updateContact(
+    { _id: contactId },
+    req.body,
+  );
 
-  const contact = await contactServices.getDeleteContact(id);
+  if (!result) {
+    throw createHttpError(404, `Contact with id=${contactId} not found`);
+  }
+
+  res.json({
+    status: 200,
+    message: 'Contact patched successfully',
+    data: result.data,
+  });
+};
+
+export const getDeleteContactController = async (req, res, next) => {
+  const { contactId } = req.params;
+
+  const contact = await contactServices.getDeleteContact(contactId);
 
   if (!contact) {
     next(createHttpError(404, 'Student not found'));

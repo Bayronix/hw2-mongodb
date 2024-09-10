@@ -13,6 +13,21 @@ export const getCreateContact = async (playload) => {
   return contacts;
 };
 
+export const updateContact = async (filter, data, options = {}) => {
+  const rawResult = await ContactCollection.findOneAndUpdate(filter, data, {
+    new: true,
+    includeResultMetadata: true,
+    ...options,
+  });
+
+  if (!rawResult || !rawResult.value) return null;
+
+  return {
+    data: rawResult.value,
+    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
+  };
+};
+
 export const getDeleteContact = async (id) => {
   const contacts = await ContactCollection.findOneAndDelete(id);
   console.log(contacts);
