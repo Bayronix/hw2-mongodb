@@ -8,10 +8,7 @@ export const getContactById = async (id) => {
   const contacts = await ContactCollection.findById(id);
   return contacts;
 };
-export const getCreateContact = async (playload) => {
-  const contacts = await ContactCollection.create(playload);
-  return contacts;
-};
+export const getCreateContact = (payload) => ContactCollection.create(payload);
 
 export const updateContact = async (filter, data, options = {}) => {
   const rawResult = await ContactCollection.findOneAndUpdate(filter, data, {
@@ -28,8 +25,4 @@ export const updateContact = async (filter, data, options = {}) => {
   };
 };
 
-export const getDeleteContact = async (id) => {
-  const contacts = await ContactCollection.findOneAndDelete(id);
-  console.log(contacts);
-  return contacts;
-};
+export const getDeleteContact = (id) => ContactCollection.findOneAndDelete(id);

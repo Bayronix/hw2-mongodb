@@ -38,7 +38,7 @@ export const getCreateContactController = async (req, res, next) => {
 
   res.status(201).json({
     status: 201,
-    message: `Successfully created a student!`,
+    message: `Successfully created a contact!`,
     data: contact,
   });
 };
@@ -67,7 +67,7 @@ export const getDeleteContactController = async (req, res, next) => {
   const contact = await contactServices.getDeleteContact(contactId);
 
   if (!contact) {
-    next(createHttpError(404, 'Student not found'));
+    next(createHttpError(404, 'Contact not found'));
     return;
   }
   res.status(204).json({
